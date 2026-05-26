@@ -31,17 +31,19 @@ pipeline {
     }
 }
 
-        stage('Security Scan') {
-    steps {
-        sh 'trivy image task-api || true'
-    }
-}
 stage('Release') {
     steps {
         sh 'docker build -t task-api:v1 .'
         sh 'docker tag task-api:v1 task-api:release'
     }
 }
+
+        stage('Security Scan') {
+    steps {
+        sh 'trivy image task-api || true'
+    }
+}
+
 
         stage('Deploy') {
             steps {
