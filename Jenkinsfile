@@ -15,10 +15,10 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                sh 'echo "No automated tests yet"'
-            }
-        }
+    steps {
+        sh 'npm test'
+    }
+}
 
         stage('Code Quality') {
             steps {
