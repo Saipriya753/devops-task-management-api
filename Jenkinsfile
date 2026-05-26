@@ -32,10 +32,10 @@ pipeline {
 }
 
         stage('Security Scan') {
-            steps {
-                sh 'echo "Security scan will be added later"'
-            }
-        }
+    steps {
+        sh 'trivy image task-api || true'
+    }
+}
 
         stage('Deploy') {
             steps {
