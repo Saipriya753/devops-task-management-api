@@ -70,15 +70,19 @@ stage('Code Quality - SonarQube') {
             steps {
                 sh """
                     docker rm -f $CONTAINER_NAME || true
-                    docker run -d --name $CONTAINER_NAME -p $PORT:$PORT $IMAGE_NAME
+                    docker run -d \
+  --name task-api \
+  -p 3000:3000 \
+  -e MONGO_URI=mongodb://host.docker.internal:27017/taskdb \
+  task-api:${BUILD_NUMBER}
                 """
             }
         }
 
         stage('Monitoring Check (/metrics)') {
             steps {
-                sh "sleep 5"
-                sh "curl http://localhost:$PORT/metrics | head"
+                sh 'sleep 10'
+sh 'curl --fail http://localhost:3000/metrics | head'
             }
         }
     }
