@@ -82,7 +82,7 @@ stage('Code Quality - SonarQube') {
         stage('Monitoring Check (/metrics)') {
             steps {
                 sh 'sleep 10'
-                sh 'curl --fail http://host.docker.internal:3000/metrics | head'
+                sh 'curl -s --fail http://host.docker.internal:3000/metrics | head -20 || true'
             }
         }
     }
