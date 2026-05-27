@@ -37,10 +37,8 @@ stage('Code Quality - SonarQube') {
         withSonarQubeEnv('SonarQube') {
             withCredentials([string(credentialsId: 'sonar-token-new', variable: 'SONAR_TOKEN')]) {
 
-                def scannerHome = tool 'SonarScanner'
-
                 sh """
-                    ${scannerHome}/bin/sonar-scanner \
+                    ${tool('SonarScanner')}/bin/sonar-scanner \
                     -Dsonar.login=$SONAR_TOKEN
                 """
             }
