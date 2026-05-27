@@ -88,10 +88,10 @@ stage('Code Quality - SonarQube') {
             echo 'Pipeline completed'
         }
         success {
-            echo 'Build Successful 🚀'
+            echo 'Build Successful'
         }
         failure {
-            echo 'Build Failed ❌'
+            echo 'Build Failed'
         }
     }
 }
