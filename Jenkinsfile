@@ -32,14 +32,17 @@ pipeline {
             }
         }
 
-        stage('Code Quality - SonarQube') {
+stage('Code Quality - SonarQube') {
     steps {
         withSonarQubeEnv('SonarQube') {
             withCredentials([string(credentialsId: 'sonar-token-new', variable: 'SONAR_TOKEN')]) {
-                sh '''
-                    sonar-scanner \
-                      -Dsonar.login=$SONAR_TOKEN
-                '''
+
+                def scannerHome = tool 'SonarScanner'
+
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.login=$SONAR_TOKEN
+                """
             }
         }
     }
