@@ -34,13 +34,19 @@ pipeline {
 
 stage('Code Quality - SonarQube') {
     steps {
-        withSonarQubeEnv('SonarQube') {
-            withCredentials([string(credentialsId: 'sonar-token-new', variable: 'SONAR_TOKEN')]) {
+        script {
+            withSonarQubeEnv('SonarQube') {
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    def scannerHome = tool 'SonarScanner'
 
-                sh """
-                    ${tool('SonarScanner')}/bin/sonar-scanner \
-                    -Dsonar.login=$SONAR_TOKEN
-                """
+                    sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=api-task-management \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://host.docker.internal:9000 \
+                    -Dsonar.token=$SONAR_TOKEN
+                    """
+                }
             }
         }
     }
